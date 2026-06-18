@@ -10,7 +10,7 @@ try:
     API_KEY = st.secrets["GEMINI_API_KEY"]
     genai.configure(api_key=API_KEY)
     # Usando o modelo 1.5-flash que é mais estável e rápido
-    model = genai.GenerativeModel('gemini-3.5-flash')
+    model = genai.GenerativeModel('gemini-3.1-flash-lite')
 except Exception as e:
     st.error("Erro na chave da API. Verifique o arquivo secrets.toml.")
 
@@ -18,9 +18,9 @@ except Exception as e:
 CAMINHO_LOGO = "logo.png" 
 ARQUIVO_HISTORICO = "historico_analises.txt"
 ENDERECO_FIXO = "Atendimento On-line"
-INSTA_FIXO = "@ana.essenciaevida"
-ZAP_FIXO = "41 99775-6683"
-NOME_TERAPEUTA_FIXO = "Ana Sampaio"
+INSTA_FIXO = "@reflexologia.curitiba"
+ZAP_FIXO = "41 99161-0224"
+NOME_TERAPEUTA_FIXO = "Enir Neves"
 
 # --- FUNÇÕES DE PERSISTÊNCIA ---
 def salvar_no_historico(nome_paciente):
@@ -96,7 +96,7 @@ def gerar_pdf(texto_analise, dados_usuario, nome_terapeuta, info_rodape):
     pdf.set_font("Arial", "B", 11)
     pdf.cell(0, 8, txt=nome_terapeuta, ln=True, align='R')
     pdf.set_font("Arial", "I", 10)
-    pdf.cell(0, 8, txt="Consultora DoTerra", ln=True, align='R')
+    pdf.cell(0, 8, txt="Terapeuta", ln=True, align='R')
     
     return pdf.output(dest='S').encode('latin-1', 'replace')
 
@@ -131,7 +131,7 @@ with st.sidebar:
     tel = st.text_input("WhatsApp", ZAP_FIXO)
 
 # ÁREA PRINCIPAL
-st.title("🌿 Portal Consultora Ana Sampaio")
+st.title("🌿 Portal Consultora doTerra Enir Neves")
 
 col1, col2 = st.columns(2)
 with col1:
@@ -171,7 +171,7 @@ if gerar:
                 
                 prompt_final = f"""
 
-                Você é uma Consultora doTERRA, com vasta experiência prática em:
+                Você é uma Terapeuta e Consultora doTERRA, com vasta experiência prática em:
 
                     - Saúde física, emocional, energética e espiritual
                     - Saúde preventiva
@@ -316,6 +316,6 @@ if "analise_atual" in st.session_state:
     st.download_button(
         label="📥 Baixar Relatório em PDF",
         data=st.session_state["pdf_bytes"],
-        file_name=f"Relatorio_{nome_paciente.replace(' ', '_')}.pdf",
+        file_name=f"Relatorio_Core_{nome_paciente.replace(' ', '_')}.pdf",
         mime="application/pdf"
     )
